@@ -1,4 +1,4 @@
 <div class="h-full w-full border-[1px] border-black border-solid flex justify-center items-center text-9xl"
     [ngClass]="disabled ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-[#ADD8E6]'"
-    (click)="!disabled && handleClickAction()">
+    (click)="!disabled && value==='' && handleClickAction()">
     {{value}}</div>

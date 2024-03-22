@@ -23,7 +23,6 @@ export class BoardComponent {
   boxes: number[] = [...Array(9)];
   activePlayer: string = 'X';
   hasGameDrawn: boolean = false;
-  isGameOver: boolean = false;
   history: PlayerMoves[] = [];
   winner: string = '';
   handleBoxClick(event: number) {
@@ -36,8 +35,12 @@ export class BoardComponent {
       squareNumber: event
     });
     this.activePlayer = this.activePlayer === 'X' ? 'O' : 'X';
+    if (this.squares?.filter(square => square.value !== '').length === 9) {
+      this.hasGameDrawn = true;
+      this.squares?.forEach(square => square.disabled = true);
+      return;
+    }
     if (this.hasAnyOneWon() !== null) {
-      this.isGameOver = true;
       this.winner = this.hasAnyOneWon() || '';
       this.squares?.forEach(square => square.disabled = true);
     }
@@ -47,7 +50,7 @@ export class BoardComponent {
     this.history = [];
     this.activePlayer = 'X';
     this.hasGameDrawn = false;
-    this.isGameOver = false;
+    this.winner = '';
     this.squares?.forEach(square => { square.value = ''; square.disabled = false; });
   }
 
